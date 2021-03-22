@@ -1,8 +1,9 @@
 <template>
   <q-list bordered separator>
     <task-item
-      v-for="task of tasks"
-      :key="task.id"
+      v-for="(task, id) of tasks"
+      :key="id"
+      :id="id"
       :task="task"
     />
   </q-list>
@@ -13,8 +14,8 @@ export default {
   name: 'TaskList',
   props: {
     tasks: {
-      type: Array,
-      default: () => [],
+      type: Object,
+      default: () => ({}),
     },
   },
   components: {
