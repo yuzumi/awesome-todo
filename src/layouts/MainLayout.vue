@@ -13,8 +13,8 @@
       show-if-above
       bordered
       content-class="bg-grey-1"
-      breakpoint="767"
-      width="250"
+      :breakpoint="767"
+      :width="250"
     >
       <q-list>
         <q-item-label
