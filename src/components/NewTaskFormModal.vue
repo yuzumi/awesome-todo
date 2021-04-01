@@ -18,55 +18,11 @@
           </q-card-section>
 
           <q-card-section class="q-pt-none">
-            <q-input
-              dense
-              v-model.trim="task.name"
-              label="Name"
-              :rules="[value => !!value || 'Field is required']"
-              ref="name"
-            />
+            <task-name-input :name.sync="task.name" ref="nameInput" />
 
-            <q-input
-              dense
-              v-model="task.dueDate"
-              mask="date"
-              label="Due date"
-              :rules="['date']"
-              ref="dueDate"
-            >
-              <template v-slot:append>
-                <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                    <q-date v-model="task.dueDate" minimal>
-                      <div class="row items-center justify-end">
-                        <q-btn v-close-popup label="Close" color="primary" flat />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
+            <task-due-date-input :due-date.sync="task.dueDate" ref="dueDateInput" />
 
-            <q-input
-              dense
-              v-model="task.dueTime"
-              mask="time"
-              label="Due time"
-              :rules="['time']"
-              ref="dueTime"
-            >
-              <template v-slot:append>
-                <q-icon name="access_time" class="cursor-pointer">
-                  <q-popup-proxy transition-show="scale" transition-hide="scale">
-                    <q-time v-model="task.dueTime">
-                      <div class="row items-center justify-end">
-                        <q-btn v-close-popup label="Close" color="primary" flat />
-                      </div>
-                    </q-time>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
+            <task-due-time-input :due-time.sync="task.dueTime" ref="dueTimeInput" />
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
@@ -102,9 +58,9 @@ export default {
     },
     isValid() {
       const fields = [
-        this.$refs.name,
-        this.$refs.dueDate,
-        this.$refs.dueTime,
+        this.$refs.nameInput.$refs.name,
+        this.$refs.dueDateInput.$refs.dueDate,
+        this.$refs.dueTimeInput.$refs.dueTime,
       ];
 
       fields.forEach((field) => field.validate());
@@ -117,6 +73,11 @@ export default {
         this.closeModal();
       }
     },
+  },
+  components: {
+    TaskNameInput: () => import('components/TaskNameInput.vue'),
+    TaskDueDateInput: () => import('components/TaskDueDateInput.vue'),
+    TaskDueTimeInput: () => import('components/TaskDueTimeInput.vue'),
   },
 };
 </script>
